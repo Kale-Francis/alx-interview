@@ -1,22 +1,24 @@
 #!/usr/bin/python3
 """
-Pascal`s Triangle implimentation
+Pascal's Triangle
+This module contains a function that returns a list of lists of integers
+representing Pascal’s triangle.
 """
 
 def pascal_triangle(n):
-	"""
-	Returns a list of lists of integers represnting the pascal`s triangle
-	"""
+    """
+    Returns a list of lists of integers representing the Pascal’s triangle of n
+    """
+    if n <= 0:
+        return []
 
-	if n <= 0:
-		return[]
-		
-	triangle = [[1]] #first row
+    triangle = [[1]]
+    for i in range(1, n):
+        prev_row = triangle[-1]
+        row = [1]
+        for j in range(1, len(prev_row)):
+            row.append(prev_row[j - 1] + prev_row[j])
+        row.append(1)
+        triangle.append(row)
 
-	for i in range(1, n):
-		prev_row = triangle[-1]
-		# start and end with 1, in between use sum of two elements  above
-		row = [1] + [prev_row[j] + prev_row[j + 1] for j in range(lenprev_row) - 1)] + [1]
-		triangle.append(row)
-
-	return triangle
+    return triangle
