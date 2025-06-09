@@ -1,28 +1,36 @@
 #!/usr/bin/python3
-"""Solves the N Queens problem"""
+"""Solves the N Queens problem using backtracking."""
 import sys
 
-def is_safe(row, col, solution):
-    """Checks if a queen can be placed at (row, col)"""
-    for r, c in solution:
-        if c == col or r - c == row - col or r + c == row + col:
+
+def is_safe(row, col, queens):
+    """Check if placing a queen at (row, col) is safe."""
+    for r, c in queens:
+        if c == col or abs(r - row) == abs(c - col):
             return False
     return True
 
-def solve_nqueens(n, row=0, solution=[], all_solutions=[]):
-    """Uses backtracking to find all solutions"""
+
+def solve_nqueens(n, row=0, queens=None, solutions=None):
+    """Recursively solve the N Queens problem."""
+    if queens is None:
+        queens = []
+    if solutions is None:
+        solutions = []
+
     if row == n:
-        all_solutions.append(solution.copy())
+        solutions.append(queens[:])
         return
 
     for col in range(n):
-        if is_safe(row, col, solution):
-            solution.append([row, col])
-            solve_nqueens(n, row + 1, solution, all_solutions)
-            solution.pop()
+        if is_safe(row, col, queens):
+            queens.append([row, col])
+            solve_nqueens(n, row + 1, queens, solutions)
+            queens.pop()
+
 
 def main():
-    """Entry point of the script"""
+    """Handle command-line input and print solutions."""
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
@@ -37,10 +45,11 @@ def main():
         print("N must be at least 4")
         sys.exit(1)
 
-    all_solutions = []
-    solve_nqueens(n, all_solutions=all_solutions)
-    for solution in all_solutions:
+    solutions = []
+    solve_nqueens(n, solutions=solutions)
+    for solution in solutions:
         print(solution)
+
 
 if __name__ == "__main__":
     main()
