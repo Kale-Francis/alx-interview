@@ -1,13 +1,10 @@
 #!/usr/bin/python3
 """
-Reads stdin line by line and computes metrics:
-- Total file size
-- Count of status codes (200, 301, 400, 401, 403, 404, 405, 500)
-Prints metrics every 10 lines and on keyboard interruption.
+This script is a shebang line for a python script that generates random log entries.
 """
 
 import sys
-import re
+import signal
 
 status_codes = {
     '200': 0,
@@ -23,37 +20,46 @@ status_codes = {
 total_file_size = 0
 line_count = 0
 
-# Regex pattern to match exact format
-log_pattern = re.compile(
-    r'^(\d+\.\d+\.\d+\.\d+) - \[.+?\] "GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$'
-)
-
 def print_metrics():
-    """Prints the current file size and status code counts."""
+    """
+    This function will be responsible for printing the current metrics
+    """
     print(f"File size: {total_file_size}")
-    for code in sorted(status_codes.keys()):
-        if status_codes[code]:
-            print(f"{code}: {status_codes[code]}")
+    for status_code, count in status_codes.items():
+        if count > 0:
+            print(f"{status_code}: {count}")
 
+def signal_handler(sig, frame):
+    """
+    This function will be called when CTRL+C is pressed.
+    """
+    print_metrics()
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 try:
     for line in sys.stdin:
         line_count += 1
-        match = log_pattern.match(line.strip())
-        if match:
-            status_code, file_size = match.group(2), match.group(3)
-            try:
-                total_file_size += int(file_size)
-                if status_code in status_codes:
-                    status_codes[status_code] += 1
-            except ValueError:
+        
+        try:
+            parts = line.split()
+            if len(parts) < 9:
                 continue
+
+            current_status_code = parts[-2]
+            current_file_size = int(parts[-1])
+            global total_file_size
+            total_file_size += current_file_size
+            global status_counts
+            if current_status_code in status_counts:
+                status_counts[current_status_code] += 1
+                
+        except ValueError:
+            pass
 
         if line_count % 10 == 0:
             print_metrics()
-
-except KeyboardInterrupt:
-    print_metrics()
-    raise
 finally:
+    # Ensure metrics are printed when the script finishes (e.g., EOF or normal exit)
     print_metrics()
