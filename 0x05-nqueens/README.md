@@ -1,43 +1,61 @@
 0x05. N Queens
-Algorithm
-Python
- Weight: 1
- Project over - took place from May 19, 2025 6:00 AM to May 23, 2025 6:00 AM
- An auto review will be launched at the deadline
-In a nutshell…
-Auto QA review: 0.0/15 mandatory
-Altogether:  0.0%
-Mandatory: 0.0%
-Optional: no optional tasks
-The “0x05. N queens” project is a classic problem in computer science and mathematics, known for its application of the backtracking algorithm to place N non-attacking queens on an N×N chessboard. To successfully complete this project, you will need to understand several key concepts and have access to resources that will help you grasp the necessary algorithms and techniques.
-
-Concepts Needed:
-Backtracking Algorithms:
-
-Understanding how backtracking algorithms work to explore all potential solutions to a problem and backtrack when a solution cannot be completed.
-Backtracking Introduction
-Recursion:
-
-Using recursive functions to implement backtracking algorithms.
-Recursion in Python
-List Manipulations in Python:
-
-Creating and manipulating lists, especially to store the positions of queens on the board.
-Python Lists
-Python Command Line Arguments:
-
-Handling command-line arguments with the sys module.
-Command Line Arguments in Python
-By studying these concepts and utilizing the resources provided, you will be equipped with the knowledge required to implement an efficient solution to the N queens problem using Python. This project not only tests programming and problem-solving skills but also offers an excellent opportunity to learn about algorithmic thinking and optimization techniques.
-
-Additional Resources
-Mock Interview
+Project Overview
+   This project, part of the ALX interview preparation, implements a solution to the N Queens problem using Python. The goal is to place N non-attacking queens on an N×N chessboard using a backtracking algorithm. The script takes a command-line argument N and prints all possible solutions.
 Requirements
-General
-Allowed editors: vi, vim, emacs
-All your files will be interpreted/compiled on Ubuntu 20.04 LTS using python3 (version 3.4.3)
-All your files should end with a new line
-The first line of all your files should be exactly #!/usr/bin/python3
-A README.md file, at the root of the folder of the project, is mandatory
-Your code should use the PEP 8 style (version 1.7.*)
-All your files must be executable
+
+Environment: Ubuntu 20.04 LTS
+Python Version: Python 3.4.3
+Allowed Editors: vi, vim, emacs
+Code Style: PEP 8 (version 1.7.x)
+Files: All files must be executable, start with #!/usr/bin/python3, and end with a newline
+Dependencies: Only sys module allowed
+
+Task Description
+Task 0: N Queens
+
+File: 0-nqueens.py
+Description: Solves the N Queens problem by placing N queens on an N×N board such that no two queens attack each other.
+Usage: ./0-nqueens.py N
+N must be an integer >= 4.
+Prints all solutions as lists of [row, col] positions.
+
+
+Error Handling:
+Wrong number of arguments: Usage: nqueens N
+Non-integer N: N must be a number
+N < 4: N must be at least 4
+Exits with status 1 for invalid input.
+
+
+
+Setup and Usage
+
+Clone the Repository:git clone <your-repo-url>
+cd alx-interview/0x05-nqueens
+
+
+Ensure Python 3.4.3:python3.4 --version
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.4
+
+
+Make File Executable:chmod +x 0-nqueens.py
+
+
+Run the Script:./0-nqueens.py 4
+
+Example output:[[0, 1], [1, 3], [2, 0], [3, 2]]
+[[0, 2], [1, 0], [2, 3], [3, 1]]
+
+
+
+Files
+
+0-nqueens.py: Script to solve the N Queens problem.
+README.md: This file, describing the project and usage.
+
+Author
+   [Kale Francis]
+License
+   This project is for educational purposes as part of the ALX program.
